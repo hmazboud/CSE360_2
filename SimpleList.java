@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 //Name: Hadi Mazboudi
 //Date: 2/10/20
 //Class: CSE360 Monday 3:00pm 
@@ -16,8 +18,61 @@ public class SimpleList{
 		count = 0;
 	}
 	
+	public void append(int num)
+	{
+		System.out.println("HAHA");
+		if(count == list.length)
+		{
+			int newSize = (int) (list.length * 1.5);
+			int[] newList = Arrays.copyOf(list, newSize);
+			list = newList;
+		}
+		list[count] = num;
+		count++;
+	}
+	
+	public int first()
+	{
+		if(count == 0)
+			return -1;
+		else
+			return list[0];
+	}
+	
+	public int last()
+	{
+		if(count == 0)
+			return -1;
+		else
+			return list[count - 1];
+	}
+	
+	public int size()
+	{
+		return list.length;
+	}
+	
 	public void add(int num)
 	{
+
+		if(count == list.length - 1)
+		{
+			int newSize = (int) (list.length * 1.5);
+			int[] newList = Arrays.copyOf(list, newSize);
+			
+			for(int iterator = count; iterator > 0; iterator--)
+			{
+				newList[iterator] = newList[iterator - 1];
+			}		
+			//the first index of the array will always be the new number passed
+			//	by the parameter, so this can be hard coded
+			newList[0] = num;
+			count++;
+			list = newList;
+			
+		}
+		else
+		{
 		//logic for this method:
 		//make iterator point to the last index of the array at the beginning
 		//	for every iteration, make the index iterator refers to equal to the
@@ -30,8 +85,8 @@ public class SimpleList{
 			//the first index of the array will always be the new number passed
 			//	by the parameter, so this can be hard coded
 			list[0] = num;
-			if(count < 9)
-				count++;
+			count++;
+		}
 	}
 	
 	public void remove(int num)
@@ -63,6 +118,13 @@ public class SimpleList{
 		}
 		count = newCount;
 		list = tempList;
+		
+		int reduceCond = (int) (list.length * 0.25);
+		if(count < reduceCond)
+		{
+			int[] newList = Arrays.copyOf(list, reduceCond);
+			list = newList;
+		}
 	}
 	
 	public int count()
